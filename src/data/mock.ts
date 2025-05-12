@@ -13,38 +13,38 @@ export const currentUser: User = {
 export const categories: Category[] = [
   {
     id: "cat1",
-    name: "Cars",
-    slug: "cars",
+    name: "Red Wine",
+    slug: "red-wine",
     count: 1245,
-    imageUrl: "https://images.unsplash.com/photo-1550355291-bbee04a92027?q=80&w=500&auto=format&fit=crop"
+    imageUrl: "https://static.millesima.com/s3/attachements/editorial/h630px/red-wine-types.jpg"
   },
   {
     id: "cat2",
-    name: "Trucks",
-    slug: "trucks",
+    name: "White Wine",
+    slug: "white-wine",
     count: 422,
-    imageUrl: "https://images.unsplash.com/photo-1659345766010-f0769343f341?q=80&w=500&auto=format&fit=crop"
+    imageUrl: "https://www.perfectcellar.com/cdn/shop/articles/Fine_Wine_and_Regular_Wine.jpg?v=1643119025"
   },
   {
     id: "cat3",
-    name: "Motorcycles",
-    slug: "motorcycles",
+    name: "Sparkling",
+    slug: "sparkling",
     count: 637,
-    imageUrl: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=500&auto=format&fit=crop"
+    imageUrl: "https://static.millesima.com/s3/attachements/editorial/h630px/how-many-ounces-in-a-glass-of-wine.jpg"
   },
   {
     id: "cat4",
-    name: "Heavy Equipment",
-    slug: "heavy-equipment",
+    name: "Rosé",
+    slug: "rose",
     count: 185,
-    imageUrl: "https://images.unsplash.com/photo-1624459294159-d40a90b14daf?q=80&w=500&auto=format&fit=crop"
+    imageUrl: "https://usualwines.com/cdn/shop/articles/image2_da42c85b-f132-4f6d-a7ae-df9c0fae3e91.jpg?v=1616121779"
   },
   {
     id: "cat5",
-    name: "Other",
-    slug: "other",
+    name: "Dessert Wine",
+    slug: "dessert-wine",
     count: 512,
-    imageUrl: "https://images.unsplash.com/photo-1622186477895-f2af6a0f5a97?q=80&w=500&auto=format&fit=crop"
+    imageUrl: "https://indian-retailer.s3.ap-south-1.amazonaws.com/s3fs-public/2024-08/Red%20wine.jpg"
   }
 ];
 
@@ -65,16 +65,16 @@ const getFutureDate = (days: number): Date => {
 export const auctions: Auction[] = [
   {
     id: "a1",
-    title: "BMW M3 E46 Engine Complete with Gearbox",
-    description: "Complete BMW M3 E46 engine with all accessories and 6-speed manual gearbox. Low mileage, excellent condition. Perfect for restoration projects or replacements.",
-    category: "Cars",
-    condition: "Used - Good",
+    title: "Premium 2015 Bordeaux Red Wine Collection",
+    description: "Complete collection of 2015 Bordeaux red wines. Perfect for collectors or special occasions. Limited edition with original packaging and certificates of authenticity.",
+    category: "Red Wine",
+    condition: "New",
     sellerId: "seller1",
-    sellerName: "Premium Auto Parts",
+    sellerName: "Premium Wine Estates",
     sellerRating: 4.9,
     images: [
-      "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?q=80&w=900&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=900&auto=format&fit=crop"
+      "https://plus.unsplash.com/premium_photo-1682097091093-dd18b37764a5?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8d2luZXxlbnwwfHwwfHx8MA%3D%3D",
+      "https://static.millesima.com/s3/attachements/editorial/h630px/red-wine-types.jpg"
     ],
     startingPrice: 4500,
     currentBid: 5750,
@@ -104,25 +104,24 @@ export const auctions: Auction[] = [
     ],
     endTime: getFutureDate(3),
     startTime: getPastDate(5),
-    location: "Munich, Germany",
-    brand: "BMW",
-    model: "M3 E46",
-    year: 2005,
+    location: "Bordeaux, France",
+    brand: "Various Premium Bordeaux",
+    year: 2015,
     isActive: true,
     views: 342
   },
   {
     id: "a2",
-    title: "Toyota Land Cruiser Original Suspension Kit",
-    description: "Complete suspension kit for Toyota Land Cruiser. Includes shocks, springs, and all mounting hardware. Perfect for off-road enthusiasts looking to upgrade their rig.",
-    category: "Cars",
+    title: "Vintage Champagne Selection - Dom Perignon",
+    description: "Exclusive selection of vintage Dom Perignon champagne. Perfect for celebrations and special occasions. Original cases with all documentation included.",
+    category: "Sparkling",
     condition: "New",
     sellerId: "seller2",
-    sellerName: "OffRoad Parts Co.",
+    sellerName: "Luxury Wine Imports",
     sellerRating: 4.7,
     images: [
-      "https://images.unsplash.com/photo-1669211159368-fe1add8c256e?q=80&w=900&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1669211160096-ebb87c0ff768?q=80&w=900&auto=format&fit=crop"
+      "https://img.freepik.com/free-photo/vertical-shot-person-holding-glass-wine-vineyard-sunlight_181624-31406.jpg?semt=ais_hybrid&w=740",
+      "https://static.millesima.com/s3/attachements/editorial/h630px/how-many-ounces-in-a-glass-of-wine.jpg"
     ],
     startingPrice: 1200,
     currentBid: 1450,
@@ -145,25 +144,24 @@ export const auctions: Auction[] = [
     ],
     endTime: getFutureDate(5),
     startTime: getPastDate(4),
-    location: "Sydney, Australia",
-    brand: "Toyota",
-    model: "Land Cruiser",
-    year: 2020,
+    location: "Paris, France",
+    brand: "Dom Perignon",
+    year: 2010,
     isActive: true,
     views: 189
   },
   {
     id: "a3",
-    title: "Harley Davidson Evo Engine - Rebuilt",
-    description: "Completely rebuilt Harley Davidson Evolution engine. Fresh from professional rebuild with 0 miles. All new internals and gaskets. Ready to drop in.",
-    category: "Motorcycles",
-    condition: "Used - Like New",
+    title: "Napa Valley Premium Cabernet Collection",
+    description: "Complete collection of premium Napa Valley Cabernet Sauvignon from top vineyards. Perfect for collectors and enthusiasts looking for exceptional quality.",
+    category: "Red Wine",
+    condition: "New",
     sellerId: "seller3",
-    sellerName: "Harley Heaven",
+    sellerName: "Napa Wine Cellars",
     sellerRating: 5.0,
     images: [
-      "https://images.unsplash.com/photo-1558981852-426c6c22a060?q=80&w=900&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1558980394-4c7c9299fe96?q=80&w=900&auto=format&fit=crop"
+      "https://www.perfectcellar.com/cdn/shop/articles/Fine_Wine_and_Regular_Wine.jpg?v=1643119025",
+      "https://media.istockphoto.com/id/1124920033/photo/variety-of-wine-in-crates-at-retail-shop.jpg?s=612x612&w=0&k=20&c=m5I85zFOmFtK297ZXyl1VEp685FPot_8f9gVp_ka-s8="
     ],
     startingPrice: 3000,
     currentBid: 3250,
@@ -186,25 +184,24 @@ export const auctions: Auction[] = [
     ],
     endTime: getFutureDate(2),
     startTime: getPastDate(6),
-    location: "Milwaukee, USA",
-    brand: "Harley Davidson",
-    model: "Evolution",
-    year: 2019,
+    location: "Napa Valley, USA",
+    brand: "Various Napa Valley",
+    year: 2018,
     isActive: true,
     views: 412
   },
   {
     id: "a4",
-    title: "Caterpillar Hydraulic Pump - Reconditioned",
-    description: "Reconditioned hydraulic pump for Caterpillar excavators and loaders. Professionally tested and certified. 6-month warranty included.",
-    category: "Heavy Equipment",
-    condition: "Used - Good",
+    title: "Vintage Italian Barolo Collection - Limited Release",
+    description: "Rare collection of vintage Barolo wines from prestigious Italian estates. Perfect for collectors and connoisseurs seeking exceptional quality.",
+    category: "Red Wine",
+    condition: "New",
     sellerId: "seller4",
-    sellerName: "Heavy Duty Parts",
+    sellerName: "Italian Wine Imports",
     sellerRating: 4.6,
     images: [
-      "https://images.unsplash.com/photo-1533326012311-ad24b3dc1f30?q=80&w=900&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1533325342868-c40d583b9b59?q=80&w=900&auto=format&fit=crop"
+      "https://twineliving.com/cdn/shop/files/fjavjzzyrev6spnl3oxr.jpg?v=1740586918&width=1080",
+      "https://www.thewanderingpalate.com/wp-content/uploads/grape-wall-of-china-wine-tasting-shanghai-bordeaux.jpg"
     ],
     startingPrice: 2800,
     currentBid: 3100,
@@ -227,24 +224,24 @@ export const auctions: Auction[] = [
     ],
     endTime: getFutureDate(7),
     startTime: getPastDate(7),
-    location: "Dubai, UAE",
-    brand: "Caterpillar",
-    year: 2018,
+    location: "Piedmont, Italy",
+    brand: "Various Barolo",
+    year: 2010,
     isActive: true,
     views: 156
   },
   {
     id: "a5",
-    title: "Ford F-150 Complete Front Axle Assembly",
-    description: "Complete front axle assembly for Ford F-150 trucks. Fits 2015-2020 models. Perfect condition with all brackets and mounting hardware included.",
-    category: "Trucks",
-    condition: "Used - Like New",
+    title: "Premium New Zealand Sauvignon Blanc Collection",
+    description: "Complete collection of New Zealand's finest Sauvignon Blanc wines. Perfect for white wine enthusiasts looking for exceptional quality and flavor profiles.",
+    category: "White Wine",
+    condition: "New",
     sellerId: "seller5",
-    sellerName: "Truck Parts Direct",
+    sellerName: "Southern Hemisphere Wines",
     sellerRating: 4.8,
     images: [
-      "https://images.unsplash.com/photo-1599256879063-3464a8f85ccc?q=80&w=900&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1571172964276-91faaa704e1f?q=80&w=900&auto=format&fit=crop"
+      "https://static.millesima.com/s3/attachements/editorial/h630px/how-many-ounces-in-a-glass-of-wine.jpg",
+      "https://usualwines.com/cdn/shop/articles/image2_da42c85b-f132-4f6d-a7ae-df9c0fae3e91.jpg?v=1616121779"
     ],
     startingPrice: 950,
     currentBid: 1200,
@@ -274,25 +271,24 @@ export const auctions: Auction[] = [
     ],
     endTime: getFutureDate(4),
     startTime: getPastDate(5),
-    location: "Toronto, Canada",
-    brand: "Ford",
-    model: "F-150",
-    year: 2018,
+    location: "Marlborough, New Zealand",
+    brand: "Various NZ Estates",
+    year: 2021,
     isActive: true,
     views: 278
   },
   {
     id: "a6",
-    title: "Vintage Volkswagen Beetle Complete Carburetor",
-    description: "Original carburetor for classic Volkswagen Beetle. Professionally restored and ready to install. Perfect for classic car restorations.",
-    category: "Cars",
-    condition: "Used - Good",
+    title: "Vintage Port Wine Collection - 1980s Selection",
+    description: "Rare collection of vintage Port wines from the 1980s. Perfect for collectors and connoisseurs of fine dessert wines with exceptional aging potential.",
+    category: "Dessert Wine",
+    condition: "Aged - Excellent",
     sellerId: "seller6",
-    sellerName: "Classic Auto Restoration",
+    sellerName: "Vintage Wine Cellar",
     sellerRating: 4.9,
     images: [
-      "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?q=80&w=900&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1567808291548-fc3ee04dbcf0?q=80&w=900&auto=format&fit=crop"
+      "https://indian-retailer.s3.ap-south-1.amazonaws.com/s3fs-public/2024-08/Red%20wine.jpg",
+      "https://media.istockphoto.com/id/1124920033/photo/variety-of-wine-in-crates-at-retail-shop.jpg?s=612x612&w=0&k=20&c=m5I85zFOmFtK297ZXyl1VEp685FPot_8f9gVp_ka-s8="
     ],
     startingPrice: 400,
     currentBid: 525,
@@ -322,11 +318,11 @@ export const auctions: Auction[] = [
     ],
     endTime: getFutureDate(6),
     startTime: getPastDate(8),
-    location: "Berlin, Germany",
-    brand: "Volkswagen",
-    model: "Beetle",
-    year: 1965,
+    location: "Porto, Portugal",
+    brand: "Various Port Houses",
+    year: 1985,
     isActive: true,
     views: 321
   }
 ];
+

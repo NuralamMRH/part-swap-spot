@@ -20,8 +20,8 @@ export interface Auction {
   id: string;
   title: string;
   description: string;
-  category: 'Cars' | 'Trucks' | 'Motorcycles' | 'Heavy Equipment' | 'Other';
-  condition: 'New' | 'Used - Like New' | 'Used - Good' | 'Used - Fair';
+  category: 'Red Wine' | 'White Wine' | 'Sparkling' | 'Rosé' | 'Dessert Wine';
+  condition: 'New' | 'Aged - Excellent' | 'Aged - Good' | 'Aged - Fair';
   sellerId: string;
   sellerName: string;
   sellerRating?: number;
