@@ -1,8 +1,8 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { auctions } from '@/data/mock';
-import { Auction } from '@/types';
+import { Auction, Bid } from '@/types';
 import { 
   Clock, 
   MapPin, 
@@ -11,7 +11,8 @@ import {
   Share2, 
   Heart, 
   AlertCircle, 
-  Truck
+  Truck,
+  Wine
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { 
@@ -35,15 +36,18 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "@/hooks/use-toast";
+import AuthModal from './AuthModal';
 
-const AuctionDetailsPage: React.FC = () => {
+const AuctionDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const auction = auctions.find(auction => auction.id === id) as Auction;
   
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [bidAmount, setBidAmount] = useState('');
   const [isBidding, setIsBidding] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // In a real app, this would come from auth state
   
   if (!auction) {
     return (
@@ -59,6 +63,23 @@ const AuctionDetailsPage: React.FC = () => {
   
   const timeLeft = formatDistanceToNow(new Date(auction.endTime), { addSuffix: true });
   const isEnding = new Date(auction.endTime).getTime() - Date.now() < 24 * 60 * 60 * 1000;
+  
+  // Generate lot information with a reasonable default
+  const lotInfo = {
+    lotNumber: parseInt(auction.id.substring(0, 2), 16) % 1000 + 1, // Generate a "random" lot number
+    totalBottles: auction.lotSize || Math.floor(Math.random() * 6) + 1,
+    bottlesSeparately: Math.random() > 0.7, // 30% chance of allowing separate bottle purchases
+    minimumBid: auction.startingPrice
+  };
+  
+  const handleBidClick = () => {
+    if (!isLoggedIn) {
+      setShowAuthModal(true);
+      return;
+    }
+    
+    handleBid();
+  };
   
   const handleBid = () => {
     setIsBidding(true);
@@ -122,9 +143,10 @@ const AuctionDetailsPage: React.FC = () => {
           {/* Description tabs */}
           <div className="mt-8">
             <Tabs defaultValue="description">
-              <TabsList className="grid grid-cols-3 mb-6">
+              <TabsList className="grid grid-cols-4 mb-6">
                 <TabsTrigger value="description">Description</TabsTrigger>
-                <TabsTrigger value="details">Details</TabsTrigger>
+                <TabsTrigger value="details">Wine Details</TabsTrigger>
+                <TabsTrigger value="lot">Lot Information</TabsTrigger>
                 <TabsTrigger value="shipping">Shipping</TabsTrigger>
               </TabsList>
               
@@ -133,10 +155,10 @@ const AuctionDetailsPage: React.FC = () => {
                   <p>{auction.description}</p>
                   <h4 className="text-lg font-medium mt-4">Features:</h4>
                   <ul className="list-disc pl-5 mt-2">
-                    <li>Original equipment manufacturer part</li>
-                    <li>Thoroughly tested and inspected</li>
-                    <li>Compatible with all standard mounts</li>
-                    <li>Includes all mounting hardware</li>
+                    <li>Premium {auction.vintage || "vintage"} wine from {auction.winery || "renowned winery"}</li>
+                    <li>Excellent storage conditions</li>
+                    <li>Original packaging and labels</li>
+                    <li>Authentic provenance documentation</li>
                   </ul>
                 </div>
               </TabsContent>
@@ -149,29 +171,98 @@ const AuctionDetailsPage: React.FC = () => {
                       <span>{auction.condition}</span>
                     </div>
                     <div className="flex justify-between py-2 border-b border-gray-100">
-                      <span className="font-medium text-gray-600">Brand</span>
-                      <span>{auction.brand}</span>
+                      <span className="font-medium text-gray-600">Vintage</span>
+                      <span>{auction.vintage || "N/A"}</span>
                     </div>
                     <div className="flex justify-between py-2 border-b border-gray-100">
-                      <span className="font-medium text-gray-600">Model</span>
-                      <span>{auction.model}</span>
+                      <span className="font-medium text-gray-600">Winery</span>
+                      <span>{auction.winery || auction.brand || "N/A"}</span>
+                    </div>
+                    <div className="flex justify-between py-2 border-b border-gray-100">
+                      <span className="font-medium text-gray-600">Region</span>
+                      <span>{auction.region || "N/A"}</span>
                     </div>
                   </div>
                   
                   <div className="space-y-2">
                     <div className="flex justify-between py-2 border-b border-gray-100">
-                      <span className="font-medium text-gray-600">Year</span>
-                      <span>{auction.year}</span>
+                      <span className="font-medium text-gray-600">Grape Variety</span>
+                      <span>{auction.grapeVariety || "N/A"}</span>
                     </div>
                     <div className="flex justify-between py-2 border-b border-gray-100">
-                      <span className="font-medium text-gray-600">Location</span>
-                      <span>{auction.location}</span>
+                      <span className="font-medium text-gray-600">Alcohol Content</span>
+                      <span>{auction.alcoholContent || "12-14%"}</span>
+                    </div>
+                    <div className="flex justify-between py-2 border-b border-gray-100">
+                      <span className="font-medium text-gray-600">Bottle Size</span>
+                      <span>{auction.bottleSize || "750ml"}</span>
                     </div>
                     <div className="flex justify-between py-2 border-b border-gray-100">
                       <span className="font-medium text-gray-600">Category</span>
                       <span>{auction.category}</span>
                     </div>
                   </div>
+                </div>
+              </TabsContent>
+              
+              <TabsContent value="lot" className="p-4">
+                <div className="space-y-4">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-lg">Lot #{lotInfo.lotNumber}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4">
+                        <div className="flex items-center justify-between">
+                          <span className="font-medium">Total Bottles:</span>
+                          <span className="text-lg">{lotInfo.totalBottles}</span>
+                        </div>
+                        
+                        <div className="flex items-center justify-between">
+                          <span className="font-medium">Bid Type:</span>
+                          <span>{lotInfo.bottlesSeparately ? "Per Bottle or Full Lot" : "Full Lot Only"}</span>
+                        </div>
+                        
+                        {lotInfo.bottlesSeparately && (
+                          <div className="flex items-center justify-between">
+                            <span className="font-medium">Price Per Bottle:</span>
+                            <span>${(auction.currentBid || auction.startingPrice) / lotInfo.totalBottles}</span>
+                          </div>
+                        )}
+                        
+                        <div className="flex items-center justify-between">
+                          <span className="font-medium">Minimum Bid:</span>
+                          <span>${lotInfo.minimumBid}</span>
+                        </div>
+                        
+                        <div className="border-t pt-4 mt-4">
+                          <h4 className="font-medium mb-2">Bidding Options:</h4>
+                          {lotInfo.bottlesSeparately ? (
+                            <div className="space-y-2">
+                              <Button variant="outline" className="w-full justify-start">
+                                <Wine className="mr-2 h-4 w-4" />
+                                Bid on Single Bottle (${Math.floor((auction.currentBid || auction.startingPrice) / lotInfo.totalBottles)})
+                              </Button>
+                              <Button variant="default" className="w-full justify-start">
+                                <Wine className="mr-2 h-4 w-4" />
+                                Bid on Entire Lot (${auction.currentBid || auction.startingPrice})
+                              </Button>
+                            </div>
+                          ) : (
+                            <div>
+                              <p className="text-sm text-gray-600 mb-2">
+                                This lot can only be purchased in its entirety.
+                              </p>
+                              <Button variant="default" className="w-full justify-start">
+                                <Wine className="mr-2 h-4 w-4" />
+                                Bid on Entire Lot (${auction.currentBid || auction.startingPrice})
+                              </Button>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
                 </div>
               </TabsContent>
               
@@ -182,7 +273,10 @@ const AuctionDetailsPage: React.FC = () => {
                     <div className="ml-3">
                       <h4 className="font-medium">Shipping Information</h4>
                       <p className="text-gray-600 mt-1">
-                        This item ships from {auction.location}. Shipping costs are calculated based on the buyer's location.
+                        This wine lot ships from {auction.location}. Shipping costs are calculated based on the buyer's location.
+                      </p>
+                      <p className="text-gray-600 mt-1">
+                        Wine is carefully packaged in temperature-controlled containers to ensure quality during transit.
                       </p>
                     </div>
                   </div>
@@ -192,7 +286,9 @@ const AuctionDetailsPage: React.FC = () => {
                     <div className="ml-3">
                       <h4 className="font-medium">Returns Policy</h4>
                       <p className="text-gray-600 mt-1">
-                        Returns accepted within 14 days if the item doesn't match the description. Buyer is responsible for return shipping costs.
+                        Returns accepted within 14 days if the wine doesn't match the description. 
+                        Cork issues or authenticity concerns must be reported immediately upon receipt.
+                        Buyer is responsible for return shipping costs.
                       </p>
                     </div>
                   </div>
@@ -206,7 +302,7 @@ const AuctionDetailsPage: React.FC = () => {
             <CardHeader>
               <CardTitle className="text-lg">Bid History</CardTitle>
               <CardDescription>
-                {auction.bids.length} {auction.bids.length === 1 ? 'bid' : 'bids'} placed on this item
+                {auction.bids.length} {auction.bids.length === 1 ? 'bid' : 'bids'} placed on this wine lot
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -271,6 +367,9 @@ const AuctionDetailsPage: React.FC = () => {
                   <div className="text-3xl font-bold text-auction-primary">
                     ${auction.currentBid?.toLocaleString()}
                   </div>
+                  <div className="text-sm text-gray-500 mt-1">
+                    Lot #{lotInfo.lotNumber}: {lotInfo.totalBottles} bottle{lotInfo.totalBottles > 1 ? 's' : ''}
+                  </div>
                 </div>
                 
                 {/* Buy now price */}
@@ -290,7 +389,7 @@ const AuctionDetailsPage: React.FC = () => {
                       value={bidAmount}
                       onChange={(e) => setBidAmount(e.target.value)}
                     />
-                    <Button disabled={!bidAmount || isBidding} onClick={handleBid}>
+                    <Button disabled={!bidAmount || isBidding} onClick={handleBidClick}>
                       {isBidding ? "Placing bid..." : "Place Bid"}
                     </Button>
                   </div>
@@ -301,7 +400,7 @@ const AuctionDetailsPage: React.FC = () => {
                   
                   {/* Buy now button */}
                   {auction.buyNowPrice && (
-                    <Button className="w-full mt-4" variant="secondary">
+                    <Button className="w-full mt-4" variant="secondary" onClick={handleBidClick}>
                       Buy Now ${auction.buyNowPrice.toLocaleString()}
                     </Button>
                   )}
@@ -332,7 +431,7 @@ const AuctionDetailsPage: React.FC = () => {
                       <DialogHeader>
                         <DialogTitle>Message to {auction.sellerName}</DialogTitle>
                         <DialogDescription>
-                          Ask a question about this item
+                          Ask a question about this wine lot
                         </DialogDescription>
                       </DialogHeader>
                       <div className="py-4">
@@ -373,8 +472,11 @@ const AuctionDetailsPage: React.FC = () => {
           </Card>
         </div>
       </div>
+      
+      {/* Authentication Modal */}
+      <AuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
     </div>
   );
 };
 
-export default AuctionDetailsPage;
+export default AuctionDetails;

@@ -6,7 +6,8 @@ import AuctionDetails from '@/components/AuctionDetails';
 const AuctionDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   
-  return <AuctionDetails auctionId={id} />;
+  // Pass the ID directly to the component rather than as a prop named auctionId
+  return <AuctionDetails />;
 };
 
 export default AuctionDetailsPage;

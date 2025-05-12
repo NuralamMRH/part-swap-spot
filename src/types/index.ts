@@ -38,6 +38,21 @@ export interface Auction {
   year?: number;
   isActive: boolean;
   views?: number;
+  // Wine-specific properties
+  winery?: string;
+  vintage?: number;
+  region?: string;
+  grapeVariety?: string;
+  bottleSize?: string;
+  alcoholContent?: string;
+  lotSize?: number; // Number of bottles in the lot
+  tasteProfile?: string;
+  acidity?: string;
+  body?: string;
+  finish?: string;
+  pairingRecommendations?: string[];
+  storageConditions?: string;
+  awards?: string[];
 }
 
 export interface Category {
@@ -46,4 +61,22 @@ export interface Category {
   slug: string;
   count: number;
   imageUrl: string;
+}
+
+export interface WineFilters {
+  category?: string;
+  vintage?: number;
+  minPrice?: number;
+  maxPrice?: number;
+  region?: string;
+  winery?: string;
+  grapeVariety?: string;
+}
+
+export interface LotInfo {
+  auctionId: string;
+  lotNumber: number;
+  totalBottles: number;
+  bottlesSeparately: boolean;
+  minimumBid?: number;
 }

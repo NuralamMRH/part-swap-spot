@@ -7,9 +7,9 @@ const SellPage: React.FC = () => {
     <div>
       <div className="bg-gray-50 py-10 px-4">
         <div className="container mx-auto max-w-4xl text-center">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4">Sell Your Car Parts</h1>
+          <h1 className="text-3xl md:text-4xl font-bold mb-4">Sell Your Fine Wines</h1>
           <p className="text-xl text-gray-600 mb-6">
-            Turn your unused auto parts into cash by listing them on our auction platform
+            Turn your wine collection into cash by listing individual bottles or entire lots on our auction platform
           </p>
           
           <div className="flex justify-center space-x-8 mt-10">
